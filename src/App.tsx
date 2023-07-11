@@ -1,24 +1,16 @@
 import React from 'react';
 import logo from './logo.svg';
+import AccessibleTable from './components/TestCasesTable';
 import './App.css';
+import { Button } from '@mui/material';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        <AccessibleTable />
+        <Button data-cy="button1">Button 1</Button>
+        <Button data-cy="button2">Button 2</Button>
+        <Button data-cy="button3">Button 3</Button>
     </div>
   );
 }
