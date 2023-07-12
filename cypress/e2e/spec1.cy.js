@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 /// <reference types="cypress" />
 
-describe('First Spec', () => {
+describe('First Spec Test', () => {
     beforeEach(() => {
       cy.visit('http://localhost:3000');
     })
