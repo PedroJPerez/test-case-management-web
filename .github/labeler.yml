@@ -1,0 +1,8 @@
+spec1:
+- cypress/e2e/spec1.cy.js
+
+spec2:
+- cypress/e2e/spec2.cy.js
+
+spec3:
+- cypress/e2e/spec3.cy.js

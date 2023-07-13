@@ -11,11 +11,16 @@ env:
 
 jobs:
   cypress-run:
+    permissions:
+      contents: read
+      pull-requests: write
     runs-on: ubuntu-latest
     name: Cypress Test Execution
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Add Labels
+        uses: actions/labeler@v4
       - name: Install Dependencies
         uses: cypress-io/github-action@v5
         with:
