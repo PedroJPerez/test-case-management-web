@@ -8,6 +8,7 @@ describe('Second Spec Test', () => {
 
   it('Button 2 is displayed', () => {
     cy.get('[data-cy="button2"]').should('be.visible');
+    cy.get('[data-cy="button2"]').click();
   })
 
 })
