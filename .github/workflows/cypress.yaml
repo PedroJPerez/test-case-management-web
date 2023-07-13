@@ -29,6 +29,10 @@ jobs:
       #  with:
       #    runTests: false
       #    build: npm run build
+      - name: Get Labels
+        run: |
+          labels="$(gh api repos/$OWNER/$REPO_NAME/pulls/$PULL_REQUEST_NUMBER --jq '.labels.[].name')"
+          echo "$labels"
       - name: Build Spec Path
         uses: actions/github-script@v6
         id: spec
@@ -39,6 +43,8 @@ jobs:
             return "cypress/e2e/spec2.cy.js"
       - name: Echo Spec
         run: echo "${{steps.spec.outputs.result}}"
+      - name: Echo Labels
+        run: echo "$labels"
 
       #- name: Run E2E Tests
       #  uses: cypress-io/github-action@v5
