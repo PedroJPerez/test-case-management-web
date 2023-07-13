@@ -52,7 +52,7 @@ jobs:
                 repo: "test-case-management-web",
                 pull_number: 2,
               })
-            const labels = response.data.labels
+            const labels = response.data.labels.map(label => label.name)
             console.log(labels);
             if(labels){
               if(labels.includes("spec1"))
@@ -61,6 +61,9 @@ jobs:
                 spec += "cypress/e2e/spec2.cy.js,"
               if(labels.includes("spec3"))
                 spec += "cypress/e2e/spec3.cy.js,"
+            }
+            else{
+              spec += "cypress/e2e/spec1.cy.js,"
             }
             return spec.substring(0,spec.length-1);
       - name: Echo Spec
