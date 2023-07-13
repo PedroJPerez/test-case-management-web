@@ -54,7 +54,7 @@ jobs:
               })
             const labels = response.data.labels.map(label => label.name)
             console.log(labels);
-            if(labels){
+            if(labels.length > 0){
               if(labels.includes("spec1"))
                 spec += "cypress/e2e/spec1.cy.js,"
               if(labels.includes("spec2"))
