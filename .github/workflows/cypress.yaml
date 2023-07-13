@@ -51,7 +51,7 @@ jobs:
               if(labels.includes("spec3"))
                 spec += "cypress/e2e/spec3.cy.js,"
             }
-            return spec
+            return spec.substring(0,string.length-1);
       - name: Echo Spec
         run: echo "${{steps.spec.outputs.result}}"
 
