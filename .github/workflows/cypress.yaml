@@ -40,13 +40,20 @@ jobs:
         with:
           result-encoding: string
           script: |
+            let spec = ''
             const labels = context.payload.pull_request.labels.map(label => label.name)
             console.log(labels);
-            return "cypress/e2e/spec2.cy.js"
+            if(labels){
+              if(labels.contains("spec1"))
+                spec += "cypress/e2e/spec2.cy.js,"
+              if(label.contains("spec2"))
+                spec += "cypress/e2e/spec2.cy.js,"
+              if(label.contains("spec3"))
+                spec += "cypress/e2e/spec3.cy.js,"
+            }
+            return spec
       - name: Echo Spec
         run: echo "${{steps.spec.outputs.result}}"
-      - name: Echo Labels
-        run: echo "$LABELS"
 
       #- name: Run E2E Tests
       #  uses: cypress-io/github-action@v5
