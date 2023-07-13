@@ -40,8 +40,7 @@ jobs:
         with:
           result-encoding: string
           script: |
-            console.log(context.payload.pull_request.labels)
-            const labels = "$(gh api repos/$OWNER/$REPO_NAME/pulls/$PULL_REQUEST_NUMBER --jq '.labels.[].name')"
+            const labels = context.payload.pull_request.labels.map(label => label.name)
             console.log(labels);
             return "cypress/e2e/spec2.cy.js"
       - name: Echo Spec
