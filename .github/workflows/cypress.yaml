@@ -32,8 +32,8 @@ jobs:
         with:
           result-encoding: string
           script: |
-          console.log(context.issue)
-          return "cypress/e2e/spec2.cy.js"
+            console.log(context.issue)
+            return "cypress/e2e/spec2.cy.js"
       - name: Echo Spec
         run: echo "${{steps.spec.outputs.result}}"
 
