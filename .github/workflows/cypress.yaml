@@ -47,7 +47,7 @@ jobs:
             const { OWNER, REPO_NAME, PULL_REQUEST_NUMBER} = process.env
             console.log(OWNER, REPO_NAME, PULL_REQUEST_NUMBER)
             let spec = ''
-            const response = await github.pulls.get({
+            const response = await github.rest.pulls.get({
                 owner: "PedroJPerez",
                 repo: "test-case-management-web",
                 pull_number: 2,
