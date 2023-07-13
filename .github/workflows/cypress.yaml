@@ -11,9 +11,6 @@ env:
 
 jobs:
   cypress-run:
-    permissions:
-      contents: read
-      pull-requests: write
     runs-on: ubuntu-latest
     name: Cypress Test Execution
     steps:
@@ -21,6 +18,9 @@ jobs:
         uses: actions/checkout@v3
       - name: Add Labels
         uses: actions/labeler@v4
+        with:
+          repo-token: ${{secrets.GITHUB_TOKEN}}
+          sync-labels: ''
       - name: Install Dependencies
         uses: cypress-io/github-action@v5
         with:
