@@ -40,9 +40,8 @@ jobs:
         with:
           result-encoding: string
           script: |
-            console.log(context.payload.pull_request)
-            console.log(context)
-            console.log(context.issue)
+            console.log(context.payload.pull_request.labels[].name)
+            
             return "cypress/e2e/spec2.cy.js"
       - name: Echo Spec
         run: echo "${{steps.spec.outputs.result}}"
