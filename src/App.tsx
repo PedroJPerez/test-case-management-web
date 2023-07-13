@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
 import TestCasesTable from './components/TestCasesTable';
 import './App.css';
 import { Button } from '@mui/material';

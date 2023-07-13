@@ -4,23 +4,57 @@ on:
   pull_request:
 
 env:
-  SPEC1: true
-  SPEC2: true
-  SPEC3: true
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
   cypress-run:
+    permissions:
+      contents: read
+      pull-requests: write
     runs-on: ubuntu-latest
     name: Cypress Test Execution
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Add Labels
+        uses: actions/labeler@v4
+        with:
+          repo-token: ${{secrets.GITHUB_TOKEN}}
+          sync-labels: ''
       - name: Install Dependencies
         uses: cypress-io/github-action@v5
         with:
           runTests: false
           build: npm run build
+      - name: Get Labels
+        run: |
+          labels="$(gh api repos/$OWNER/$REPO_NAME/pulls/$PULL_REQUEST_NUMBER --jq '.labels.[].name')"
+          echo "$labels" 
+        env:
+          OWNER: ${{ github.repository_owner }}
+          REPO_NAME: ${{ github.event.repository.name }}
+          PULL_REQUEST_NUMBER: ${{ github.event.pull_request.number }}
+      - name: Build Spec Path
+        uses: actions/github-script@v6
+        id: spec
+        with:
+          result-encoding: string
+          script: |
+            let spec = ''
+            const labels = context.payload.pull_request.labels.map(label => label.name)
+            console.log(labels);
+            if(labels){
+              if(labels.includes("spec1"))
+                spec += "cypress/e2e/spec1.cy.js,"
+              if(labels.includes("spec2"))
+                spec += "cypress/e2e/spec2.cy.js,"
+              if(labels.includes("spec3"))
+                spec += "cypress/e2e/spec3.cy.js,"
+            }
+            return spec.substring(0,spec.length-1);
+      - name: Echo Spec
+        run: echo "${{steps.spec.outputs.result}}"
+
       - name: Run E2E Tests
         uses: cypress-io/github-action@v5
         with:
@@ -28,6 +62,7 @@ jobs:
           start: npm run start
           wait-on: 'http://localhost:3000'
           browser: chrome
+          spec: ${{steps.spec.outputs.result}}
 
 
   
