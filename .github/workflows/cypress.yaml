@@ -11,6 +11,9 @@ env:
 
 jobs:
   cypress-run:
+    permissions:
+      contents: read
+      pull-requests: write
     runs-on: ubuntu-latest
     name: Cypress Test Execution
     steps:
