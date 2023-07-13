@@ -4,9 +4,6 @@ on:
   pull_request:
 
 env:
-  SPEC1: true
-  SPEC2: true
-  SPEC3: true
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
@@ -31,7 +28,7 @@ jobs:
       #    build: npm run build
       - name: Get Labels
         run: |
-          LABELS="$(gh api repos/$OWNER/$REPO_NAME/pulls/$PULL_REQUEST_NUMBER --jq '.labels.[].name')"
+          export LABELS="$(gh api repos/$OWNER/$REPO_NAME/pulls/$PULL_REQUEST_NUMBER --jq '.labels.[].name')"
           echo "$LABELS"
         env:
           OWNER: ${{ github.repository_owner }}
