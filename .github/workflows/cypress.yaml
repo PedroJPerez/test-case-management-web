@@ -37,13 +37,22 @@ jobs:
       - name: Build Spec Path
         uses: actions/github-script@v6
         id: spec
+        env:
+          OWNER: ${{ github.repository_owner }}
+          REPO_NAME: ${{ github.event.repository.name }}
+          PULL_REQUEST_NUMBER: ${{ github.event.pull_request.number }}
         with:
           result-encoding: string
           script: |
+            const { OWNER, REPO_NAME, PULL_REQUEST_NUMBER} = process.env
             let spec = ''
-            const labels = context.payload.pull_request.labels.map(label => label.name)
-            console.log(labels);
-            if(labels){
+            const response = await github.pulls.get({
+                owner: OWNER,
+                repo: REPO_NAME,
+                pull_number: PULL_REQUEST_NUMBER,
+              })
+            console.log(response);
+            if(response){
               if(labels.includes("spec1"))
                 spec += "cypress/e2e/spec1.cy.js,"
               if(labels.includes("spec2"))
