@@ -28,8 +28,8 @@ jobs:
       #    build: npm run build
       - name: Get Labels
         run: |
-          export LABELS="$(gh api repos/$OWNER/$REPO_NAME/pulls/$PULL_REQUEST_NUMBER --jq '.labels.[].name')"
-          echo "$LABELS"
+          LABELS="$(gh api repos/$OWNER/$REPO_NAME/pulls/$PULL_REQUEST_NUMBER --jq '.labels.[].name')"
+          echo "$LABELS" >> $GITHUB_ENV
         env:
           OWNER: ${{ github.repository_owner }}
           REPO_NAME: ${{ github.event.repository.name }}
