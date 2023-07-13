@@ -21,6 +21,14 @@ jobs:
         with:
           runTests: false
           build: npm run build
+      - name: Build Spec Path
+        uses: actions/github-script@v6
+        id: spec
+        with:
+          result-encoding: string
+          script: |
+          "return cypress/e2e/spec2.cy.js"
+
       - name: Run E2E Tests
         uses: cypress-io/github-action@v5
         with:
@@ -28,6 +36,7 @@ jobs:
           start: npm run start
           wait-on: 'http://localhost:3000'
           browser: chrome
+          spec: ${{steps.spect.outputs.result}}
 
 
   
