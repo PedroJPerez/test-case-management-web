@@ -27,7 +27,7 @@ jobs:
         with:
           result-encoding: string
           script: |
-          "return cypress/e2e/spec2.cy.js"
+          return "cypress/e2e/spec2.cy.js"
 
       - name: Run E2E Tests
         uses: cypress-io/github-action@v5
