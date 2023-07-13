@@ -21,11 +21,11 @@ jobs:
         with:
           repo-token: ${{secrets.GITHUB_TOKEN}}
           sync-labels: ''
-      #- name: Install Dependencies
-      #  uses: cypress-io/github-action@v5
-      #  with:
-      #    runTests: false
-      #    build: npm run build
+      - name: Install Dependencies
+        uses: cypress-io/github-action@v5
+        with:
+          runTests: false
+          build: npm run build
       - name: Get Labels
         run: |
           labels="$(gh api repos/$OWNER/$REPO_NAME/pulls/$PULL_REQUEST_NUMBER --jq '.labels.[].name')"
@@ -69,14 +69,14 @@ jobs:
       - name: Echo Spec
         run: echo "${{steps.spec.outputs.result}}"
 
-    #  - name: Run E2E Tests
-    #    uses: cypress-io/github-action@v5
-    #    with:
-    #      install: false
-    #      start: npm run start
-    #      wait-on: 'http://localhost:3000'
-    #      browser: chrome
-    #      spec: ${{steps.spec.outputs.result}}
+      - name: Run E2E Tests
+        uses: cypress-io/github-action@v5
+        with:
+          install: false
+          start: npm run start
+          wait-on: 'http://localhost:3000'
+          browser: chrome
+          spec: ${{steps.spec.outputs.result}}
 
 
   
