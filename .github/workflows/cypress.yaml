@@ -48,9 +48,9 @@ jobs:
             console.log(OWNER, REPO_NAME, PULL_REQUEST_NUMBER)
             let spec = ''
             const response = await github.rest.pulls.get({
-                owner: "PedroJPerez",
-                repo: "test-case-management-web",
-                pull_number: 2,
+                owner: OWNER,
+                repo: REPO_NAME,
+                pull_number: PULL_REQUEST_NUMBER,
               })
             const labels = response.data.labels.map(label => label.name)
             console.log(labels);
