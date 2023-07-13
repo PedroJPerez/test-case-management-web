@@ -45,9 +45,9 @@ jobs:
             console.log(labels);
             if(labels){
               if(labels.includes("spec1"))
-                spec += "cypress/e2e/spec2.cy.js,"
+                spec += "cypress/e2e/spec1.cy.js,"
               if(labels.includes("spec2"))
-                spec += "cypress/e2e/spec2.cy.js,"
+                spec += "cypress/e2e/spec2cy.js,"
               if(labels.includes("spec3"))
                 spec += "cypress/e2e/spec3.cy.js,"
             }
