@@ -10,6 +10,7 @@ function App() {
         <Button data-cy="button1">Button 1</Button>
         <Button data-cy="button2">Button 2</Button>
         <Button data-cy="button3">Button 3</Button>
+        <Button data-cy="button4">Button 4</Button>
     </div>
   );
 }
