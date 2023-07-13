@@ -44,11 +44,11 @@ jobs:
             const labels = context.payload.pull_request.labels.map(label => label.name)
             console.log(labels);
             if(labels){
-              if(labels.contains("spec1"))
+              if(labels.includes("spec1"))
                 spec += "cypress/e2e/spec2.cy.js,"
-              if(label.contains("spec2"))
+              if(label.includes("spec2"))
                 spec += "cypress/e2e/spec2.cy.js,"
-              if(label.contains("spec3"))
+              if(label.includes("spec3"))
                 spec += "cypress/e2e/spec3.cy.js,"
             }
             return spec
