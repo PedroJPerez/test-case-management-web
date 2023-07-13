@@ -31,7 +31,7 @@ jobs:
       #    build: npm run build
       - name: Get Labels
         run: |
-          labels="$(gh api repos/$OWNER/$REPO_NAME/pulls/$PULL_REQUEST_NUMBER --jq '.labels.[].name')"
+          labels="$(gh api repos/${{context.issue.owner}}/${{context.issue.repo}}/pulls/${{context.issue.number}} --jq '.labels.[].name')"
           echo "$labels"
       - name: Build Spec Path
         uses: actions/github-script@v6
