@@ -21,10 +21,11 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "CI=false npm run build",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "ci:start": "npm ci && npm run start"
+    "ci:start": "npm ci && npm run start",
+    "cypress:build": "CI=false npm run build"
   },
   "eslintConfig": {
     "extends": [
