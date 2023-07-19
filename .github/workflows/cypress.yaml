@@ -40,6 +40,8 @@ jobs:
             const labels = response.data.labels.map(label => label.name)
             console.log(labels)
             return labels
+      - name: Echo Labels
+        run: echo ${{steps.labels.outputs.result}}
       - name: Build Spec Path
         uses: actions/github-script@v6
         id: spec
