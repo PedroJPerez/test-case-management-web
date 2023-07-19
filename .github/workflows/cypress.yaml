@@ -21,22 +21,9 @@ jobs:
         with:
           repo-token: ${{secrets.GITHUB_TOKEN}}
           sync-labels: ''
-      #- name: Install Dependencies
-      #  uses: cypress-io/github-action@v5
-      #  with:
-      #    runTests: false
-      #    build: npm run build
       - name: Get Labels
-        run: |
-          labels="$(gh api repos/$OWNER/$REPO_NAME/pulls/$PULL_REQUEST_NUMBER --jq '.labels.[].name')"
-          echo "$labels" 
-        env:
-          OWNER: ${{ github.repository_owner }}
-          REPO_NAME: ${{ github.event.repository.name }}
-          PULL_REQUEST_NUMBER: ${{ github.event.pull_request.number }}
-      - name: Build Spec Path
         uses: actions/github-script@v6
-        id: spec
+        id: labels
         env:
           OWNER: ${{ github.repository_owner }}
           REPO_NAME: ${{ github.event.repository.name }}
@@ -45,14 +32,27 @@ jobs:
           result-encoding: string
           script: |
             const { OWNER, REPO_NAME, PULL_REQUEST_NUMBER} = process.env
-            console.log(OWNER, REPO_NAME, PULL_REQUEST_NUMBER)
-            let spec = ''
             const response = await github.rest.pulls.get({
                 owner: OWNER,
                 repo: REPO_NAME,
                 pull_number: PULL_REQUEST_NUMBER,
               })
             const labels = response.data.labels.map(label => label.name)
+            console.log(labels)
+            return labels
+      - name: Echo Labels
+        run: echo ${{steps.labels.outputs.result}}
+      - name: Build Spec Path
+        uses: actions/github-script@v6
+        id: spec
+        env:
+          LABELS: ${{steps.labels.outputs.result}}
+        with:
+          result-encoding: string
+          script: |
+            const { LABELS } = process.env
+            let spec = ''
+            const labels = LABELS
             console.log(labels);
             if(labels.length > 0){
               if(labels.includes("spec1"))
@@ -68,15 +68,18 @@ jobs:
             return spec.substring(0,spec.length-1);
       - name: Echo Spec
         run: echo "${{steps.spec.outputs.result}}"
-
-    #  - name: Run E2E Tests
-    #    uses: cypress-io/github-action@v5
-    #    with:
-    #      install: false
-    #      start: npm run start
-    #      wait-on: 'http://localhost:3000'
-    #      browser: chrome
-    #      spec: ${{steps.spec.outputs.result}}
+      - name: Install Dependencies
+        uses: cypress-io/github-action@v5
+        with:
+          runTests: false
+      - name: Run E2E Tests
+        uses: cypress-io/github-action@v5
+        with:
+          install: false
+          start: npm run start
+          wait-on: 'http://localhost:3000'
+          browser: chrome
+          spec: ${{steps.spec.outputs.result}}
 
 
   
