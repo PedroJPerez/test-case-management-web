@@ -27,7 +27,7 @@ jobs:
       - name: GET PR From SHA
         id: pr_number
         run: |
-          gh pr list --search ${{github.sha}} --json number --jq '.[0].number'
+          gh pr list --search ${{github.sha}} --json number
       - name: PRINT PR NUM
         run: |
           echo ${{steps.pr_number.outputs.result}}
