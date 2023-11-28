@@ -32,6 +32,6 @@ jobs:
         env:
           TITLE: ${{steps.pull_request.outputs.pr}}
         run: | 
-          echo "$TITLE"
+          echo "$TITLE" | jq '.title'
 
  
