@@ -29,12 +29,9 @@ jobs:
         run: |
           pr="$(gh pr view 7 --json author,title,labels)"
           pr_title=$(jq -r '.title' <<< "$pr")
-          echo "$pr_title"
-#      - name: PRINT PR DETAILS
-#        env:
-#          TITLE: ${{steps.pull_request.outputs.pr_info}} 
-#        run: | 
-#          echo "$TITLE"
-#          echo "$PR_TITLE"
+          echo "PR_TITLE="$pr_title >>> GITHUB_ENV
+      - name: PRINT PR DETAILS
+        run: | 
+          echo "$PR_TITLE"
 
  
