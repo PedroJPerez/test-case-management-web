@@ -27,13 +27,16 @@ jobs:
       - name: GET PR Details
         id: pull_request
         run: |
-          echo "pr=$(gh pr view 7 --json author,title,labels)" >> $GITHUB_OUTPUT
-          echo 'NUM_OPEN_ISSUES='$pr >> $GITHUB_ENV
+          pr="$(gh pr view 7 --json author,title,labels)"
+          echo "$pr" >> $GITHUB_OUTPUT
+          echo "$pr" | jq '.title'
       - name: PRINT PR DETAILS
         env:
           TITLE: ${{steps.pull_request.outputs.pr}} 
         run: | 
           echo "$TITLE" | jq '.title'
-          echo "$NUM_OPEN_ISSUES"
+      - name: COMMIT INFO
+        run: |
+          echo "$COMMIT_INFO_REMOTE"
 
  
