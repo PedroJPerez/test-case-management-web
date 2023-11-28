@@ -28,6 +28,8 @@ jobs:
         id: pull_request
         run: |
           pr="$(gh pr view 7 --json author,title,labels)"
+          pr_title=$pr | jq '.author'
+          echo "$pr_title"
           echo "pr_info=$pr" >> $GITHUB_OUTPUT
           echo "PR_TITLE="$pr >> $GITHUB_ENV
           echo "$pr" | jq '.author'
