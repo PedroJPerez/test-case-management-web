@@ -34,7 +34,7 @@ jobs:
         env:
           TITLE: ${{steps.pull_request.outputs.pr}} 
         run: | 
-          echo "$TITLE" | jq '.title'
+          echo "$TITLE"
       - name: COMMIT INFO
         run: |
           echo "$COMMIT_INFO_REMOTE"
