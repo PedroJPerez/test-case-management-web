@@ -27,7 +27,7 @@ jobs:
       - name: GET PR Details
         id: pull_request
         run: |
-          gh pr view 7 --json author,title,labels
+          gh pr view 7 --json author,title,labels >> $GITHUB_OUTPUT
       - name: PRINT PR DETAILS
         run: | 
           echo ${{steps.pull_request.outputs.result}}
