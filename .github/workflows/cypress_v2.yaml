@@ -24,10 +24,12 @@ jobs:
       - name: Print SHA
         run: |
           echo ${{github.sha}}
-      - name: GET PR From SHA
-        id: pr_number
+      - name: GET PR Details
+        id: pull_request
         run: |
-          gh pr list --search ${{github.sha}}
-      - name: PRINT PR NUM
-        run: |
-          echo ${{steps.pr_number.outputs.result}}
+          return gh pr view 7 --json author,title,labels
+      - name: PRINT PR DETAILS
+        run: | 
+          echo ${{steps.pull_request.outputs.result}}
+
+ 
