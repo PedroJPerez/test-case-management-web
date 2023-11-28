@@ -29,13 +29,14 @@ jobs:
         run: |
           pr="$(gh pr view 7 --json author,title,labels)"
           echo "pr_info=$pr" >> $GITHUB_OUTPUT
-          echo "$pr" | jq '.title'
+          echo 'PR_TITLE='$pr | jq '.title' >> $GITHUB_ENV
           echo "$pr" | jq '.author'
       - name: PRINT PR DETAILS
         env:
           TITLE: ${{steps.pull_request.outputs.pr_info}} 
         run: | 
           echo "$TITLE"
+          echo "$PR_TITLE"
       - name: COMMIT INFO
         run: |
           echo "$COMMIT_INFO_REMOTE"
