@@ -1,0 +1,42 @@
+name: Cypress Tests
+
+on:
+  pull_request:
+
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+jobs:
+  cypress-run:
+    permissions:
+      contents: read
+      pull-requests: write
+    runs-on: ubuntu-latest
+    name: Cypress Test Execution
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Print GitHub Context
+        env: 
+          GITHUB_CONTEXT: $${{toJson(github)}}
+        run: |
+          echo "$GITHUB_CONTEXT"
+      - name: Print SHA
+        run: |
+          echo ${{github.sha}}
+      - name: GET PR Details
+        id: pull_request
+        run: |
+          pr="$(gh pr view 7 --json author,title,labels)"
+          pr_title=$(jq -r '.title' <<< "$pr")
+          pr_author=$(jq -r '.author.name' <<< "$pr")
+          echo "labels=$(jq -r '.labels' <<< "$pr")"
+          echo "$labels"
+          echo "PR_TITLE="$pr_title >> $GITHUB_ENV
+          echo "PR_AUTHOR="$pr_author >> $GITHUB_ENV
+      - name: PRINT PR DETAILS
+        run: | 
+          echo "$PR_TITLE"
+          echo "$PR_AUTHOR"
+
+ 
