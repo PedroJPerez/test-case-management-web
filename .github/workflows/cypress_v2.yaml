@@ -30,7 +30,7 @@ jobs:
           pr="$(gh pr view 7 --json author,title,labels)"
           pr_title=$(jq -r '.title' <<< "$pr")
           pr_author=$(jq -r '.author.name' <<< "$pr")
-          echo "labels=$(jq -r '.author.labels' <<< "$pr")" >> $GITHUB_OUTPUT
+          echo "labels=$(jq -r '.labels' <<< "$pr")" >> $GITHUB_OUTPUT
           echo "PR_TITLE="$pr_title >> $GITHUB_ENV
           echo "PR_AUTHOR="$pr_author >> $GITHUB_ENV
       - name: PRINT PR DETAILS
